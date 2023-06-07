@@ -1,0 +1,70 @@
+class Link {
+    public int iData; // data item (key)
+    public double dData; // data item
+    public Link next; // next link in list
+
+    public Link(int id, double dd) // constructor
+    {
+        iData = id; // initialize data
+        dData = dd; // (‘next’ is automatically set to null)
+    }
+
+    public void displayLink() // display ourselves
+    {
+        System.out.print("{" + iData + ", " + dData + "} ");
+    }
+} // end class Link
+
+class LinkList {
+    private Link first; // reference to first link on the list
+
+    public LinkList() // constructor
+    {
+        first = null; // no items on the list yet
+    }
+
+    public boolean isEmpty() // true if the list is empty
+    {
+        return (first == null);
+    }
+
+    public void insertFirst(int id, double dd) { // insert at the start of the list
+        Link newLink = new Link(id, dd);
+        newLink.next = first; // newLink --> old first
+        first = newLink; // first --> newLink
+    }
+
+    public Link deleteFirst() { // delete the first item (assumes the list is not empty)
+        Link temp = first; // save reference to the link
+        first = first.next; // delete it: first --> old next
+        return temp; // return the deleted link
+    }
+
+    public void displayList() {
+        System.out.print("List (first-->last): ");
+        Link current = first; // start at the beginning of the list
+        while (current != null) { // until the end of the list
+            current.displayLink(); // print data
+            current = current.next; // move to the next link
+        }
+        System.out.println();
+    }
+} // end class LinkList
+
+public class LinkListApp {
+    public static void main(String[] args) {
+        LinkList theList = new LinkList(); // create a new list
+        theList.insertFirst(22, 2.99); // insert four items
+        theList.insertFirst(44, 4.99);
+        theList.insertFirst(66, 6.99);
+        theList.insertFirst(88, 8.99);
+        theList.displayList(); // display the list
+        while (!theList.isEmpty()) { // until it's empty
+            Link aLink = theList.deleteFirst(); // delete a link
+            System.out.print("Deleted "); // display it
+            aLink.displayLink();
+            System.out.println();
+        }
+        theList.displayList(); // display the list
+    } // end main()
+} // end class LinkListApp
